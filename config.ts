@@ -26,9 +26,11 @@ type Config = {
   waitForSelectorTimeout?: number;
 };
 
+const baseUrl = "https://boardgamegeek.com/boardgame/246900/eclipse-second-dawn-galaxy/forums/66?pageid="
 export const config: Config = {
-  url: "https://boardgamegeek.com/thread/3190923/influence-action-move-disk-sector-non-adjacent-sec",
+  url: `${baseUrl}1`,
   linkConfig: {
+    // urls: fill in here,
     regexps: [new RegExp('https://boardgamegeek.com/thread/\\d+/.*')],
     exclude: [new RegExp('https://boardgamegeek.com/thread/\\d+/article/.*')],
   },
