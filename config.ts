@@ -1,10 +1,13 @@
 import { Page } from "playwright";
+import { RegExpInput } from "crawlee";
 
 type Config = {
   /** URL to start the crawl */
   url: string;
-  /** Pattern to match against for links on a page to subsequently crawl */
-  match: string;
+  /** Globs to match against for links on a page to subsequently crawl */
+  linkGlobs: string[];
+  /** Regexps to match against for links on a page to subsequently crawl */
+  linkRegexps: RegExpInput[];
   /** Selector to grab the inner text from */
   selector: string;
   /** Don't crawl more than this many pages */
@@ -23,9 +26,10 @@ type Config = {
 };
 
 export const config: Config = {
-  url: "https://www.builder.io/c/docs/developers",
-  match: "https://www.builder.io/c/docs/**",
-  selector: `.docs-builder-container`,
-  maxPagesToCrawl: 50,
+  url: "https://boardgamegeek.com/boardgame/246900/eclipse-second-dawn-galaxy/forums/66",
+  linkGlobs: [],
+  linkRegexps: [`https://boardgamegeek.com/thread/\d+/**`],
+  selector: `.global-body-content-primary`,
+  maxPagesToCrawl: 5,
   outputFileName: "output.json",
 };
