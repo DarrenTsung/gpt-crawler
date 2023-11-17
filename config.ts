@@ -28,7 +28,7 @@ type Config = {
 export const config: Config = {
   url: "https://boardgamegeek.com/boardgame/246900/eclipse-second-dawn-galaxy/forums/66",
   linkGlobs: [],
-  linkRegexps: [new RegExp('https://boardgamegeek.com/thread/\\d+/**')],
+  linkRegexps: [new RegExp('https://boardgamegeek.com/thread/\\d+/.*')],
   selector: `.global-body-content-primary`,
   maxPagesToCrawl: 5,
   outputFileName: "output.json",
