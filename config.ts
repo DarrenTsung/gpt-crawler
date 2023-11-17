@@ -26,10 +26,10 @@ type Config = {
 };
 
 export const config: Config = {
-  url: "https://boardgamegeek.com/boardgame/246900/eclipse-second-dawn-galaxy/forums/66",
+  url: "https://boardgamegeek.com/thread/3190923/influence-action-move-disk-sector-non-adjacent-sec",
   linkGlobs: [],
   linkRegexps: [new RegExp('https://boardgamegeek.com/thread/\\d+/.*')],
   selector: `.post-header, .post-body`,
-  maxPagesToCrawl: 5,
+  maxPagesToCrawl: 1,
   outputFileName: "output.json",
 };
