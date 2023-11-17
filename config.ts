@@ -1,9 +1,10 @@
 import { Page } from "playwright";
 import { EnqueueLinksOptions } from "crawlee";
+import { PageElement } from "./src/main.js";
 
 type Config = {
   /** Custom function to extract text from an HTMLElement */
-  customTextExtractor?: (element: HTMLElement) => string;
+  customTextExtractor?: (element: PageElement) => string;
   /** URL to start the crawl */
   url: string;
   /** Configuration for link matching using extractLinks() */
@@ -40,7 +41,7 @@ export const config: Config = {
         return lines[0];
       }
     } else {
-      return element.innerHTML;
+      return element.innerText;
     }
   },
   selector: `.post-header, .post-body`,
