@@ -33,7 +33,7 @@ export const config: Config = {
     exclude: [new RegExp('https://boardgamegeek.com/thread/\\d+/article/.*')],
   },
   customTextExtractor: (element) => {
-    if (element.classList.contains('post-header')) {
+    if (element.classList.includes('post-header')) {
       const lines = element.innerText.split('\n').filter(line => line.trim() !== '');
       if (lines.length > 1 && lines[1] === 'Designer') {
         return `${lines[0]} (Designer)`;
