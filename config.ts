@@ -1,15 +1,11 @@
 import { Page } from "playwright";
-import { RegExpInput } from "crawlee";
+import { EnqueueLinksOptions } from "crawlee";
 
 type Config = {
   /** URL to start the crawl */
   url: string;
-  /** Globs to match against for links on a page to subsequently crawl */
-  linkGlobs: string[];
-  /** Regexps to match against for links on a page to subsequently crawl */
-  linkRegexps: RegExpInput[];
-  /** Regexps to match against for *excluding* links on a page to subsequently crawl */
-  linkExcludes: RegExpInput[];
+  /** Configuration for link matching using extractLinks() */
+  linkConfig?: EnqueueLinksOptions;
   /** Selector to grab the inner text from */
   selector: string;
   /** Don't crawl more than this many pages */
@@ -29,9 +25,10 @@ type Config = {
 
 export const config: Config = {
   url: "https://boardgamegeek.com/thread/3190923/influence-action-move-disk-sector-non-adjacent-sec",
-  linkGlobs: [],
-  linkRegexps: [new RegExp('https://boardgamegeek.com/thread/\\d+/.*')],
-  linkExcludes: [new RegExp('https://boardgamegeek.com/thread/\\d+/article/.*')],
+  linkConfig: {
+    regexps: [new RegExp('https://boardgamegeek.com/thread/\\d+/.*')],
+    exclude: [new RegExp('https://boardgamegeek.com/thread/\\d+/article/.*')],
+  },
   selector: `.post-header, .post-body`,
   maxPagesToCrawl: 5,
   outputFileName: "output.json",
