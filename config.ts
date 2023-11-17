@@ -8,6 +8,8 @@ type Config = {
   linkGlobs: string[];
   /** Regexps to match against for links on a page to subsequently crawl */
   linkRegexps: RegExpInput[];
+  /** Regexps to match against for *excluding* links on a page to subsequently crawl */
+  linkExcludes: RegExpInput[];
   /** Selector to grab the inner text from */
   selector: string;
   /** Don't crawl more than this many pages */
@@ -29,7 +31,8 @@ export const config: Config = {
   url: "https://boardgamegeek.com/thread/3190923/influence-action-move-disk-sector-non-adjacent-sec",
   linkGlobs: [],
   linkRegexps: [new RegExp('https://boardgamegeek.com/thread/\\d+/.*')],
+  linkExcludes: [new RegExp('https://boardgamegeek.com/thread/\\d+/article/.*')],
   selector: `.post-header, .post-body`,
-  maxPagesToCrawl: 1,
+  maxPagesToCrawl: 5,
   outputFileName: "output.json",
 };

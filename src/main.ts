@@ -8,7 +8,7 @@ import { Page } from "playwright";
 export function getPageHtml(page: Page) {
   return page.evaluate((selector) => {
     const elements = Array.from(document.querySelectorAll(selector));
-    return elements.map(element => (element as HTMLElement).innerText).filter(text => text.trim().length > 0);
+    return elements.map(element => (element as HTMLElement).innerText);
   }, config.selector);
 }
 
@@ -54,6 +54,7 @@ if (process.env.NO_CRAWL !== "true") {
       await enqueueLinks({
         globs: config.linkGlobs,
         regexps: config.linkRegexps,
+        exclude: config.linkExcludes,
       });
     },
     // Comment this option to scrape the full website.
