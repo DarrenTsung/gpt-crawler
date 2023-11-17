@@ -8,7 +8,7 @@ import { Page } from "playwright";
 export function getPageHtml(page: Page) {
   return page.evaluate((selector) => {
     const elements = Array.from(document.querySelectorAll(selector));
-    return elements.map(element => element.innerText).filter(text => text.trim().length > 0);
+    return elements.map(element => (element as HTMLElement).innerText).filter(text => text.trim().length > 0);
   }, config.selector);
 }
 
