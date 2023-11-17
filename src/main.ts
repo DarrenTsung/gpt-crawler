@@ -37,7 +37,8 @@ if (process.env.NO_CRAWL !== "true") {
           timeout: config.waitForSelectorTimeout ?? 1000,
         });
       } catch (error) {
-        console.error(`Error waiting for selector: ${error}`);
+        log.error(`Error waiting for selector: ${error}`);
+        return;
       }
 
       const html = await getPageHtml(page);
