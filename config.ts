@@ -31,6 +31,13 @@ export const config: Config = {
     regexps: [new RegExp('https://boardgamegeek.com/thread/\\d+/.*')],
     exclude: [new RegExp('https://boardgamegeek.com/thread/\\d+/article/.*')],
   },
+  customTextExtractor: (element) => {
+    if (element.classList.contains('.post-header')) {
+
+    } else {
+      element.innerHTML
+    }
+  },
   selector: `.post-header, .post-body`,
   maxPagesToCrawl: 5,
   outputFileName: "output.json",
