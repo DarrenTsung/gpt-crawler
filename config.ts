@@ -2,6 +2,8 @@ import { Page } from "playwright";
 import { EnqueueLinksOptions } from "crawlee";
 
 type Config = {
+  /** Custom function to extract text from an HTMLElement */
+  customTextExtractor?: (element: HTMLElement) => string;
   /** URL to start the crawl */
   url: string;
   /** Configuration for link matching using extractLinks() */

@@ -6,10 +6,13 @@ import { config } from "../config.js";
 import { Page } from "playwright";
 
 export function getPageHtml(page: Page) {
-  return page.evaluate((selector) => {
+  return page.evaluate(({ selector, customTextExtractor }) => {
     const elements = Array.from(document.querySelectorAll(selector));
-    return elements.map(element => (element as HTMLElement).innerText);
-  }, config.selector);
+    return elements.map(element => {
+      const htmlElement = element as HTMLElement;
+      return customTextExtractor ? customTextExtractor(htmlElement) : htmlElement.innerText;
+    });
+  }, { selector: config.selector, customTextExtractor: config.customTextExtractor });
 }
 
 if (process.env.NO_CRAWL !== "true") {
