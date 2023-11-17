@@ -30,7 +30,7 @@ const baseUrl = "https://boardgamegeek.com/boardgame/246900/eclipse-second-dawn-
 export const config: Config = {
   url: `${baseUrl}1`,
   linkConfig: {
-    // urls: fill in here,
+    urls: Array.from({ length: 51 }, (_, i) => `${baseUrl}${i}`),
     regexps: [new RegExp('https://boardgamegeek.com/thread/\\d+/.*')],
     exclude: [new RegExp('https://boardgamegeek.com/thread/\\d+/article/.*')],
   },
