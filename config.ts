@@ -6,7 +6,7 @@ type Config = {
   /** Custom function to extract text from an HTMLElement */
   customTextExtractor?: (element: PageElement) => string;
   /** URL to start the crawl */
-  url: string;
+  urls: string[];
   /** Configuration for link matching using extractLinks() */
   linkConfig?: EnqueueLinksOptions;
   /** Selector to grab the inner text from */
@@ -28,7 +28,7 @@ type Config = {
 
 const baseUrl = "https://boardgamegeek.com/boardgame/246900/eclipse-second-dawn-galaxy/forums/66?pageid="
 export const config: Config = {
-  urls: Array.from({ length: 51 }, (_, i) => `${baseUrl}${i}`),
+  urls: Array.from({ length: 51 }, (_, i) => `${baseUrl}${i + 1}`),
   linkConfig: {
     regexps: [new RegExp('https://boardgamegeek.com/thread/\\d+/.*')],
     exclude: [new RegExp('https://boardgamegeek.com/thread/\\d+/article/.*')],
@@ -46,6 +46,6 @@ export const config: Config = {
     }
   },
   selector: `.post-header, .post-body`,
-  maxPagesToCrawl: 5,
+  maxPagesToCrawl: 650,
   outputFileName: "output.json",
 };

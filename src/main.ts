@@ -5,14 +5,22 @@ import { glob } from "glob";
 import { config } from "../config.js";
 import { Page } from "playwright";
 
-export function getPageHtml(page: Page) {
-  return page.evaluate(({ selector, customTextExtractor }) => {
+export type PageElement = {
+  innerText: string,
+  classList: string[],
+}
+
+export function getPageElements(page: Page): Promise<PageElement[]> {
+  return page.evaluate(({ selector }) => {
     const elements = Array.from(document.querySelectorAll(selector));
     return elements.map(element => {
       const htmlElement = element as HTMLElement;
-      return customTextExtractor ? customTextExtractor(htmlElement) : htmlElement.innerText;
+      return {
+        innerText: htmlElement.innerText,
+        classList: Array.from(htmlElement.classList),
+      }
     });
-  }, { selector: config.selector, customTextExtractor: config.customTextExtractor });
+  }, { selector: config.selector });
 }
 
 if (process.env.NO_CRAWL !== "true") {
@@ -43,10 +51,11 @@ if (process.env.NO_CRAWL !== "true") {
         log.info(`Selector not found or timeout exceeded: ${config.selector}`);
       }
 
-      const html = await getPageHtml(page);
+      const pageElements = await getPageElements(page);
+      const contents = pageElements.map(e => config.customTextExtractor ? config.customTextExtractor(e) : e.innerText);
 
       // Save results as JSON to ./storage/datasets/default
-      await pushData({ title, url: request.loadedUrl, html });
+      await pushData({ title, url: request.loadedUrl, contents });
 
       if (config.onVisitPage) {
         await config.onVisitPage({ page, pushData });
@@ -63,7 +72,7 @@ if (process.env.NO_CRAWL !== "true") {
   });
 
   // Add first URL to the queue and start the crawl.
-  await crawler.run([config.url]);
+  await crawler.run(config.urls);
 }
 
 const jsonFiles = await glob("storage/datasets/default/*.json", {
